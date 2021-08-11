@@ -1,6 +1,9 @@
 from dotenv import load_dotenv
+from keepa import fetch_graph
+from urllib.error import HTTPError
 import discord
 import os
+import io
 
 load_dotenv()
 DISCORD_TOKEN = os.getenv('DISCORD_TOKEN')
@@ -28,6 +31,15 @@ async def on_message(message):
         # print('Message received: ' + message.content)
         asin_id = message.content.strip().split(' ')[1]
         print('ASIN received: ' + asin_id)
-        await message.reply('**Showing graph with ASIN:** `' + asin_id + '`', mention_author=True)
+        
+        response = fetch_graph(asin_id)
+        if response.status_code >= 400:
+            await message.reply('**ERROR: Encountered issue with Keepa API token. Please check your Keepa token value!**')
+        else:
+            # for 200, it will always return an PNG image, even if the ASIN is incorrect
+            # pass the image blob to the discord file
+            image = io.BytesIO(response.content)
+            await message.reply('**Showing graph with ASIN:** `' + asin_id + '`', file=discord.File(image, 'graph.png'), mention_author=True)
+            
 
 client.run(DISCORD_TOKEN)
