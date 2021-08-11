@@ -1,14 +1,15 @@
+from discord.ext import commands, tasks
 from dotenv import load_dotenv
 from keepa import fetch_graph
-from urllib.error import HTTPError
+import asyncio
 import discord
 import io
 import os
-import re
-import requests
+import sys
+from signal import SIGINT, SIGTERM
 
 load_dotenv()
-DISCORD_TOKEN = os.environ('DISCORD_TOKEN')
+DISCORD_TOKEN = os.environ['DISCORD_TOKEN']
 error_string = 'Invalid ASIN received. Message should be in this format: -asin <ASIN_ID>'
 
 client = discord.Client()
@@ -50,3 +51,24 @@ def validate_asin(asin_id):
     return len(asin_id) == 10 and (asin_id.startswith('BT') or asin_id.startswith('B0'))
 
 client.run(DISCORD_TOKEN)
+
+
+if __name__ == '__main__':
+	if not DISCORD_TOKEN:
+		print('Error: DISCORD_TOKEN not found')
+		sys.exit(1)
+
+	loop = asyncio.get_event_loop()
+
+	def interrupt():
+		raise KeyboardInterrupt
+
+	loop.add_signal_handler(SIGINT, interrupt)
+	loop.add_signal_handler(SIGTERM, interrupt)
+
+	try:
+		loop.run_until_complete(client.run(DISCORD_TOKEN))
+	except KeyboardInterrupt:
+		pass
+	finally:
+		loop.run_until_complete(client.close())
