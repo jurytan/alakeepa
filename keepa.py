@@ -7,7 +7,7 @@ import os
 import requests
 
 load_dotenv()
-KEEPA_TOKEN = os.getenv('KEEPA_TOKEN')
+KEEPA_TOKEN = os.environ('KEEPA_TOKEN')
 
 def fetch_graph(asin_id):
     payload = {
