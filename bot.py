@@ -7,7 +7,6 @@ import io
 
 load_dotenv()
 DISCORD_TOKEN = os.getenv('DISCORD_TOKEN')
-TEST_GUILD_ID = os.getenv('TEST_GUILD_ID')
 
 client = discord.Client()
 
