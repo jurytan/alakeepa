@@ -1,15 +1,7 @@
 # AlaKeepa
 
-## Installation
-How to use this bot:
-1. Create `.env` file in the same directory
-2. Make sure to set `KEEPA_TOKEN` and `DISCORD_TOKEN` like this:
-
-```bash
-KEEPA_TOKEN=<keepa_token_from_webpage>
-DISCORD_TOKEN=<discord_bot_token>
-```
-3. Run bot.py
+## Instructions
+https://jnguyen7410.gitbook.io/alakeepa/
 
 ## FAQs
 To get your API token for Keepa, go to https://keepa.com/#!api.
