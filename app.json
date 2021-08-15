@@ -1,0 +1,14 @@
+{
+    "name": "Alakeepa",
+    "description": "Discord bot to get ASIN graphs from Keepa",
+    "repository": "https://github.com/jnguyen7410/alakeepa",
+    "keywords": ["python", "keepa", "discord", "bot"],
+    "env": {
+        "DISCORD_TOKEN": {
+          "description": "The secret token for your Discord Bot."
+        },
+        "KEEPA_TOKEN": {
+          "description": "The secret token for your Keepa account."
+        }
+      }
+  }
